@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import com.github.bassaer.chatmessageview.model.IChatUser;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Модель пользователя. Содержит информацию, необходимую для диалога
+ */
 class User implements IChatUser {
     private String mId;
     private Bitmap mIcon;

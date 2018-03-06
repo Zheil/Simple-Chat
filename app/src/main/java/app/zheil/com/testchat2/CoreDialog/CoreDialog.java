@@ -1,20 +1,15 @@
 package app.zheil.com.testchat2.CoreDialog;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-
 import com.github.bassaer.chatmessageview.model.Message;
-
 import java.util.Random;
-
-import app.zheil.com.testchat2.MyBot;
 import app.zheil.com.testchat2.R;
 
 /**
- * Created by Zheil on 06.03.2018.
+ * Основная логика работы чата
  */
 
 public class CoreDialog {
@@ -24,16 +19,16 @@ public class CoreDialog {
     private MyBot myBot;
     private Boolean isUserBot;
     private Context mContext;
-    private iController mController;
-    private int mTurnUserDialog = 0;
+    private iResponsable mController;
+    private int mTurnUserDialog;
 
-    public CoreDialog(Boolean isUserBot, Context context, iController controller) {
+    public CoreDialog(Boolean isUserBot, Context context, iResponsable controller) {
         this.isUserBot = isUserBot;
         this.mContext = context;
         this.mController = controller;
+        mTurnUserDialog = 0;
         configUsers();
     }
-
 
     public void sendUserMessage(String userText) {
         Message message;
@@ -44,7 +39,7 @@ public class CoreDialog {
             botReceived();
         } else {
             Boolean turnTalk = getTurnTalk();
-           message = userMessage(userText, changeDialog(), turnTalk);
+           message = userMessage(userText, getCurrentUserAndChangeDialog(), turnTalk);
            mController.userMessage(message);
         }
     }
@@ -53,7 +48,7 @@ public class CoreDialog {
         return  mTurnUserDialog == 0;
     }
 
-     private User changeDialog() {
+     private User getCurrentUserAndChangeDialog() {
        if( mTurnUserDialog == 0) {
            mTurnUserDialog = 1;
            return mChatCurrentUser;
@@ -77,7 +72,6 @@ public class CoreDialog {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //mChatView.receive(receivedMessage);
                 mController.botMessage(receivedMessage);
             }
         }, sendDelay);
@@ -86,7 +80,6 @@ public class CoreDialog {
 
     private Message userMessage(String text, User user, boolean isRight) {
         return buildMessage(text, user, isRight);
-
     }
 
     private Message buildMessage(String text, User user, boolean isRight) {
@@ -99,9 +92,9 @@ public class CoreDialog {
         return message;
     }
 
-
-
-
+    /**
+     * Конфигурация пользователей чата
+     */
     private void configUsers() {
         String botId = "0";
         Bitmap botIcon = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.emmi);
