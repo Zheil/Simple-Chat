@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements iResponsable {
         setContentView(R.layout.activity_main);
 
         mChatView = findViewById(R.id.chat_view);
-        mContrller = new ControllerDialog(true, this,this);
+        mContrller = new ControllerDialog(false, this,this);
 
         setUi();
         setListenersDialog();

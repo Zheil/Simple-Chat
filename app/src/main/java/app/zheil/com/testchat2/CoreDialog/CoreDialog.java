@@ -25,6 +25,7 @@ public class CoreDialog {
     private Boolean isUserBot;
     private Context mContext;
     private iController mController;
+    private int mTurnUserDialog = 0;
 
     public CoreDialog(Boolean isUserBot, Context context, iController controller) {
         this.isUserBot = isUserBot;
@@ -35,16 +36,32 @@ public class CoreDialog {
 
 
     public void sendUserMessage(String userText) {
+        Message message;
         if(isUserBot) {
-            Message message =  userMessage(userText, mChatCurrentUser, true);
+             message =  userMessage(userText, mChatCurrentUser, true);
 
             mController.userMessage(message);
             botReceived();
         } else {
-          //  Boolean turnTalk = getTurnTalk();
-            //userMessage(changeDialog(), turnTalk);
+            Boolean turnTalk = getTurnTalk();
+           message = userMessage(userText, changeDialog(), turnTalk);
+           mController.userMessage(message);
         }
     }
+
+    private boolean getTurnTalk() {
+        return  mTurnUserDialog == 0;
+    }
+
+     private User changeDialog() {
+       if( mTurnUserDialog == 0) {
+           mTurnUserDialog = 1;
+           return mChatCurrentUser;
+       } else {
+           mTurnUserDialog = 0;
+           return mChatCurrentUser2;
+       }
+   }
 
     private void botReceived() {
         //Receive message
