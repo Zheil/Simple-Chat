@@ -1,9 +1,8 @@
 package app.zheil.com.testchat2;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
-import android.os.Handler;
+
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,14 +11,15 @@ import android.view.View;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.view.ChatView;
 
-import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+import app.zheil.com.testchat2.CoreDialog.ControllerDialog;
+
+import app.zheil.com.testchat2.CoreDialog.iResponsable;
+
+public class MainActivity extends AppCompatActivity implements iResponsable {
 
     private ChatView mChatView;
-    private User mChatBot;
-    private User mChatCurrentUser;
-    private MyBot myBot;
+    private ControllerDialog mContrller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,50 +27,89 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mChatView = findViewById(R.id.chat_view);
+        mContrller = new ControllerDialog(true, this,this);
 
-        configUsers();
         setUi();
-        setListeners();
+        setListenersDialog();
+
+
     }
 
 
-    private void setListeners() {
+    @Override
+    public void userMessage(Message message) {
+        //Set to chat view
+        mChatView.send(message);
+
+        //Reset edit text
+        mChatView.setInputText("");
+    }
+
+    @Override
+    public void botMessage(Message message) {
+        mChatView.receive(message);
+    }
+
+    /*
+
+    private void botReceived() {
+        //Receive message
+        final Message receivedMessage = new Message.Builder()
+                .setUser(mChatBot)
+                .setRight(false)
+                .setText(myBot.getMessage())
+                .build();
+
+        // This is a demo bot
+        // Return within 3 seconds
+        int sendDelay = (new Random().nextInt(4) + 1) * 1000;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mChatView.receive(receivedMessage);
+            }
+        }, sendDelay);
+    }
+*/
+
+
+    private int mNumberDialog = 0;
+
+    private boolean getTurnTalk() {
+        return mNumberDialog == 0;
+    }
+
+
+   /* private User changeDialog() {
+        if(mNumberDialog == 0) {
+            mNumberDialog = 1;
+            return mChatCurrentUser;
+        } else {
+            mNumberDialog = 0;
+            return mChatCurrentUser2;
+        }
+    }*/
+
+    private void setListenersDialog() {
         //Click Send Button
         mChatView.setOnClickSendButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //new message
-                Message message = new Message.Builder()
-                        .setUser(mChatCurrentUser)
-                        .setRight(true)
-                        .setText(mChatView.getInputText())
-                        .hideIcon(true)
-                        .build();
-                //Set to chat view
-                mChatView.send(message);
+                mContrller.sendUserMessage(mChatView.getInputText());
 
-                //Reset edit text
-                mChatView.setInputText("");
+               /* if(isUserBot) {
+                    userMessage(mChatCurrentUser, true);
+                    botReceived();
+                } else {
+                    Boolean turnTalk = getTurnTalk();
+                    userMessage(changeDialog(), turnTalk);
+                }*/
 
-                //Receive message
-                final Message receivedMessage = new Message.Builder()
-                        .setUser(mChatBot)
-                        .setRight(false)
-                        .setText(myBot.getMessage())
-                        .build();
-
-                // This is a demo bot
-                // Return within 3 seconds
-                int sendDelay = (new Random().nextInt(4) + 1) * 1000;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mChatView.receive(receivedMessage);
-                    }
-                }, sendDelay);
             }
         });
     }
+
+
 
     /***
      * Set UI parameters
@@ -91,18 +130,5 @@ public class MainActivity extends AppCompatActivity {
         mChatView.setMessageMarginBottom(5);
     }
 
-    private void configUsers() {
-        String botId = "0";
-        Bitmap botIcon = BitmapFactory.decodeResource(getResources(), R.drawable.emmi);
-        String botName = "Emmi";
 
-        String userId = "1";
-        Bitmap userIcon = BitmapFactory.decodeResource(getResources(), R.drawable.andrey);
-        String userName = "Andrey";
-
-        mChatBot = new User(botId, botName, botIcon);
-        mChatCurrentUser = new User(userId, userName, userIcon);
-
-        myBot = new MyBot(mChatBot.getName(), mChatCurrentUser.getName());
-    }
 }

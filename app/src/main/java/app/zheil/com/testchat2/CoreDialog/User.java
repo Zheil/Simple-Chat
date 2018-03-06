@@ -1,4 +1,4 @@
-package app.zheil.com.testchat2;
+package app.zheil.com.testchat2.CoreDialog;
 
 import android.graphics.Bitmap;
 import com.github.bassaer.chatmessageview.model.IChatUser;
