@@ -44,8 +44,9 @@ public class CoreDialog {
         }
     }
 
-    public void sendUserMessage(String userText, String author) {
-        sendUserMessage(userText);
+    public void sendUserMessage(String userText, String author, Boolean isRightCurrentUser) {
+        //sendUserMessage(userText);
+        mController.userMessage(userMessage(userText, new User(author), isRightCurrentUser));
     }
 
     private boolean getTurnTalk() {

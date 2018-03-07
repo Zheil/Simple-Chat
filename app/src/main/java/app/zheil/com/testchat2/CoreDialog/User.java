@@ -12,6 +12,12 @@ class User implements IChatUser {
     private Bitmap mIcon;
     private String nName;
 
+    public User( String nName) {
+        this.mId = "0";
+        this.nName = nName;
+        this.mIcon = null;
+    }
+
     public User(String mId, String nName, Bitmap mIcon) {
         this.mId = mId;
         this.nName = nName;

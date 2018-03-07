@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.firebase.ui.auth.AuthUI;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.view.ChatView;
 import com.google.firebase.database.DataSnapshot;
@@ -71,6 +72,12 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        //AuthUI.getInstance().signOut(this);
+    }
+
+    @Override
     public void botMessage(Message message) {
 
     }
@@ -89,10 +96,19 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
 
     private int oldIndex = 0;
     private void addMessageToController() {
+        Boolean isCurrentUserRightPosition;
+
         for (int i = oldIndex; i < mListMessage.size(); i++, oldIndex++) {
+            if(mUserName.toLowerCase().equals(mListMessage.get(i).getAutor().toLowerCase())) {
+                isCurrentUserRightPosition = true;
+            } else {
+                isCurrentUserRightPosition = false;
+            }
+
             mController.sendUserMessage(
                     mListMessage.get(i).getTextMessage(),
-                    mListMessage.get(i).getAutor());
+                    mListMessage.get(i).getAutor(),
+                    isCurrentUserRightPosition);
 
         }
         //mListMessage.clear();
