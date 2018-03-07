@@ -5,10 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-
-import com.firebase.ui.auth.AuthUI;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.view.ChatView;
 import com.google.firebase.database.DataSnapshot;
@@ -16,28 +13,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import app.zheil.com.testchat2.CoreDialog.ControllerDialog;
 import app.zheil.com.testchat2.CoreDialog.MessageFireBase;
 import app.zheil.com.testchat2.CoreDialog.iResponsable;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
- * Created by Zheil on 07.03.2018.
+ * Активити-диалог для firebase
  */
 
 public class FireBaseDialogActivity extends AppCompatActivity implements iResponsable {
-
-
     ChatView mChatView;
-
     private DatabaseReference mFireRef;
     private ControllerDialog mController;
-
     private String mUserName;
 
     @Override
@@ -54,7 +43,6 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
         displayMessage();
     }
 
-
     private void setListenersDialog() {
         mChatView.setOnClickSendButtonListener(new View.OnClickListener() {
             @Override
@@ -67,14 +55,12 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
     @Override
     public void userMessage(Message message) {
         mChatView.send(message);
-
         mChatView.setInputText("");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //AuthUI.getInstance().signOut(this);
     }
 
     @Override
@@ -90,14 +76,13 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
     public void sendMessage(String message) {
         mFireRef.push().setValue(
                 new MessageFireBase(message, mUserName));
-
     }
 
 
     private int oldIndex = 0;
+
     private void addMessageToController() {
         Boolean isCurrentUserRightPosition;
-
         for (int i = oldIndex; i < mListMessage.size(); i++, oldIndex++) {
             if(mUserName.toLowerCase().equals(mListMessage.get(i).getAutor().toLowerCase())) {
                 isCurrentUserRightPosition = true;
@@ -111,8 +96,6 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
                     isCurrentUserRightPosition);
 
         }
-        //mListMessage.clear();
-
     }
 
 
@@ -124,9 +107,6 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
                 mListMessage.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     mListMessage.add(snapshot.getValue(MessageFireBase.class));
-
-                   // Log.d("MYLOG", mListMessage.get(mListMessage.size()-1).getTextMessage() + " | "
-                         //   + mListMessage.get(mListMessage.size()-1).getAutor());
                 }
                 addMessageToController();
             }
@@ -137,7 +117,6 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
             }
         });
     }
-
 
     private void setUi() {
         mChatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.green500));
@@ -154,6 +133,4 @@ public class FireBaseDialogActivity extends AppCompatActivity implements iRespon
         mChatView.setMessageMarginTop(5);
         mChatView.setMessageMarginBottom(5);
     }
-
-
 }
