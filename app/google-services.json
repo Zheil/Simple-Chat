@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "338210703103",
+    "firebase_url": "https://mychat-c1a20.firebaseio.com",
+    "project_id": "mychat-c1a20",
+    "storage_bucket": "mychat-c1a20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338210703103:android:2e5498bd9b10bead",
+        "android_client_info": {
+          "package_name": "app.zheil.com.testchat2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338210703103-dq22q0eg0joc8foip52dro4ssr7t4s1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.zheil.com.testchat2",
+            "certificate_hash": "549c8a4e72a5acdee16b06d52dc690be64ed4c18"
+          }
+        },
+        {
+          "client_id": "338210703103-uugapgs488c7jjvshcmjps80surtspop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrMadokEdn90fdWeYb1vHWd6Z67SX2qLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338210703103-uugapgs488c7jjvshcmjps80surtspop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,4 +2,6 @@
     <string name="app_name">Simple Chat</string>
     <string name="user_chat">User chat</string>
     <string name="bot_chat">Bot chat</string>
+    <string name="firebase_chat">FireBase chat</string>
+    <string name="connect">Connect</string>
 </resources>

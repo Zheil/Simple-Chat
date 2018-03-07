@@ -17,14 +17,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnOnClick_ShowUserChat(View view) {
-        showChat(false);
+        showLocalChat(false);
     }
 
     public void btnOnClick_ShowBotChat(View view) {
-        showChat(true);
+        showLocalChat(true);
     }
 
-    private void showChat(Boolean isBot) {
+    public void btnOnClick_ShowFireBaseChat(View view) {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void showLocalChat(Boolean isBot) {
         Intent intent = new Intent(this, DialogActivity.class);
         intent.putExtra("isBot", isBot);
         startActivity(intent);
