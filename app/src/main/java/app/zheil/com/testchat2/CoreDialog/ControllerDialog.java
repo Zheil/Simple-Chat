@@ -20,6 +20,10 @@ public class ControllerDialog implements iResponsable{
         mCore.sendUserMessage(userText);
     }
 
+    public void sendUserMessage(String userText, String author) {
+        mCore.sendUserMessage(userText, author);
+    }
+
     @Override
     public void userMessage(Message message) {
         mRespons.userMessage(message);

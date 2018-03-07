@@ -44,6 +44,10 @@ public class CoreDialog {
         }
     }
 
+    public void sendUserMessage(String userText, String author) {
+        sendUserMessage(userText);
+    }
+
     private boolean getTurnTalk() {
         return  mTurnUserDialog == 0;
     }
@@ -110,4 +114,6 @@ public class CoreDialog {
 
         myBot = new MyBot(mChatBot.getName(), mChatCurrentUser.getName());
     }
+
+
 }

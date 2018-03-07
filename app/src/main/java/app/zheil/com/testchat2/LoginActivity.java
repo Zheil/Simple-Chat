@@ -35,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         mFireAuth = FirebaseAuth.getInstance();
 
 
+        etLogin.setText("nikita@mail.com");
+        etPass.setText("1234560");
+
 
     }
 

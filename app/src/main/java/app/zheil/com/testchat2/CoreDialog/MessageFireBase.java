@@ -1,7 +1,8 @@
 package app.zheil.com.testchat2.CoreDialog;
 
 /**
- * Created by Zheil on 07.03.2018.
+ * Модель сообщения, содержит информацию, необходимую для диалога
+ * Используется в FireBase
  */
 import java.util.Date;
 public class MessageFireBase {
